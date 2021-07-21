@@ -9,38 +9,42 @@ menuLink.insertAdjacentHTML('beforeend', createMenuListMarckup(menu));
 
 changeLink.addEventListener('change', changeTheme);
 
-function createMenuListMarckup(menu){
-    return menuListTpl(menu);
-}
-
+startTheme ();
 changeTheme ();
 
-function changeTheme () {
+function createMenuListMarckup(menu){
+  return menuListTpl(menu);
+}
+
+function startTheme () {
   const themeThis = localStorage.getItem('theme');
 
-  if(!themeThis){
-    if(!changeLink.checked) {
+  if(!themeThis) {
       localStorage.setItem('theme', 'light-theme');
-    } else {
-      localStorage.setItem('theme', 'dark-theme');
-    }
-
-    themeThis === 'light-theme' ? changeLink.checked = false : changeLink.checked = true;
-  } else {
-    if(changeLink.checked){
-      localStorage.removeItem('theme');
-      localStorage.setItem('theme', 'dark-theme');
-     } else {
-      localStorage.removeItem('theme');
-      localStorage.setItem('theme', 'light-theme');
+      bodylink.classList.add('light-theme');
+      changeLink.checked = false;   
+  } else if (themeThis === 'light-theme') {
+      bodylink.classList.add('light-theme');
+      changeLink.checked = false;
+  } else if (themeThis === 'dark-theme') {
+      bodylink.classList.add('dark-theme');
+      changeLink.checked = true;
     }
 }
 
-  if(!changeLink.checked) {
-    bodylink.classList.remove('dark-theme')
-    bodylink.classList.add('light-theme');
+function changeTheme (e) {
+  if(e.target.checked) {
+      localStorage.removeItem('theme');
+      localStorage.setItem('theme', 'dark-theme');
+      bodylink.classList.remove('light-theme');
+      bodylink.classList.add('dark-theme');
   } else {
-    bodylink.classList.remove('light-theme')
-    bodylink.classList.add('dark-theme');
+      localStorage.removeItem('theme');
+      localStorage.setItem('theme', 'light-theme');
+      bodylink.classList.remove('dark-theme');
+      bodylink.classList.add('light-theme');
   }
 }
+
+
+
